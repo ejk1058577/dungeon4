@@ -1,5 +1,8 @@
 import {Actor, CollisionType, Color, Rectangle, Vector} from "excalibur";
 import { Enemy } from "../actors/enemy";
+import { Chest } from "../actors/chest";
+import { Portal } from "../actors/portal";
+import { Fountain } from "../actors/fountain";
 
 export class Level {
     scene;
@@ -10,13 +13,14 @@ export class Level {
     assocWalls;
     cleared;
 
-    constructor(floor, scene, bounds) {
+    constructor(floor, scene, bounds) { 
         this.floor = floor;
         this.scene = scene;
         this.bounds = bounds;
         this.mobs = [];
         this.assocWalls = [];
         this.cleared = false;
+        this.tiles = [];
 
         //make grid
         this.grid =
@@ -29,7 +33,11 @@ export class Level {
 
         //make tile for each
         this.grid.forEach((arr, i) => {
-            arr = arr.map((v, j) => new Tile(v, new Vector((j+1) * 140 + bounds.xmin, (i+1) * 140 + bounds.ymin))); //make each of the numbers into tiles
+            arr = arr.map((v, j) => {
+                let tile = new Tile(v, new Vector((j+1) * 140 + bounds.xmin, (i+1) * 140 + bounds.ymin));
+                this.tiles.push(tile);
+                return tile;
+             }); //make each of the numbers into tiles
             arr.forEach(t => this.scene.add(t)); //add tile to scene
         });
 
@@ -65,7 +73,30 @@ class Spawner {
             enemy.pos = this.randomCords(bounds);
             this.scene.add(enemy);
         }
+    }
 
+    spawnPoI(n) { //point of interest //0= normal, 1=chest, 2=fountain & 3=portal
+        let actor;
+        let tile = this.randomTile();
+        switch(n) {
+            case 0:
+                return;
+            case 1:
+                actor = new Chest({});
+            case 2:
+                actor = new Fountain({});
+            case 3:
+                actor = new Portal({}, tile.pos);
+        }
+        this.scene.add(actor);
+        console.log(actor);
+    }
+
+    onEnemyKill(enemy) {
+        this.amount--;
+        if (this.amount <= 0) {
+            this.level.onLevelClear();
+        }
     }
 
     randomCords(bounds) {
@@ -74,11 +105,12 @@ class Spawner {
         return new Vector(x, y);
     }
 
-    onEnemyKill(enemy) {
-        this.amount--;
-        if (this.amount <= 0) {
-            this.level.onLevelClear();
-        }
+    randomTile() {
+        let tiles = this.level.tiles;
+        let max = tiles.length - 1;
+        let min = 0;
+        let i = Math.floor(Math.random() * (max - min + 1)) + min;
+        return tiles[i];
     }
 }
 

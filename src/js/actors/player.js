@@ -16,9 +16,11 @@ export class Player extends Character {
         this.pos = new Vector(200, 200);
     
         this.fireballLifespan = 1600;
-        this.fireballCooldown = 1500;
+        this.fireballCooldown = 0;
         this.cooldownActive = false;
         this.hp = 100;
+
+        this.body.collisionType = CollisionType.Passive;
     }
 
     onInitialize(_engine) {
@@ -36,28 +38,29 @@ export class Player extends Character {
     }
 
     playerInput(engine, delta) {
+        let moveSpeed = 500;
         let xspeed = 0;
         let yspeed = 0;
         let inputs = 0;
 
         if (engine.input.keyboard.isHeld(Input.Keys.W)) {
             inputs++;
-            yspeed = -150;
+            yspeed = -moveSpeed;
         }
 
         if (engine.input.keyboard.isHeld(Input.Keys.A)) {
             inputs++;
-            xspeed = -150;
+            xspeed = -moveSpeed;
         }
 
         if (engine.input.keyboard.isHeld(Input.Keys.S)) {
             inputs++;
-            yspeed = 150;
+            yspeed = moveSpeed;
         }
 
         if (engine.input.keyboard.isHeld(Input.Keys.D)) {
             inputs++;
-            xspeed = 150;
+            xspeed = moveSpeed;
         }
 
         if (inputs > 1) {
@@ -134,7 +137,7 @@ class Fireball extends Actor {
 
         this.on('collisionstart', (e) => {
             if (e.other instanceof Enemy) {
-                e.other.damage(10);
+                e.other.damage(900);
                 this.kill();
             }
         });

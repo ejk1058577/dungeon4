@@ -1,11 +1,14 @@
-import { Vector } from "excalibur";
+import { Vector, randomInRange } from "excalibur";
 import { Level } from "./level";
 import { Wall } from "./wall";
+import { Portal } from "../actors/portal";
 
 export class Floor {
     scene;
     grid;
     bounds;
+    levels;
+    unassignedLevels;
 
     //TODO maybe bad to put everything in constructor
     constructor(scene) {
@@ -18,8 +21,16 @@ export class Floor {
             ymin: 200
         }
 
+        this.levels = [];
+
         this.createGrid();
         this.createWalls();
+
+        this.unassignedLevels = this.levels;
+
+        this.spawnPortal();
+        this.spawnChest();
+        this.spawnFountain();
     }
 
     createGrid() {
@@ -43,7 +54,9 @@ export class Floor {
                     ymin: vt * 50 + (vt-1) * 4 * 140
                 }
 
-                return new Level(this, this.scene, lvlBounds);
+                let level = new Level(this, this.scene, lvlBounds);
+                this.levels.push(level);
+                return level
             });
         });
     }
@@ -92,6 +105,28 @@ export class Floor {
                 }
             });
         });
+    }
+
+    spawnPortal() {
+        let i = this.randomUnassignedLevel();
+        this.levels[i].spawner.spawnPoI(3);
+        this.unassignedLevels.splice(i , 1);
+    }
+
+    spawnChest() {
+
+    }
+
+    spawnFountain() {
+
+    }
+
+    randomUnassignedLevel() {
+        let levels = this.unassignedLevels;
+        let max = levels.length - 1;
+        let min = 0;
+        let i = Math.floor(Math.random() * (max - min + 1)) + min;
+        return i;
     }
 
     assocConditions(i, j, h) { //this gets functions because its A LOT of boolean logic
