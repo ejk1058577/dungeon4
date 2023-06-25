@@ -1,4 +1,4 @@
-import { Actor } from "excalibur";
+import { Actor, CollisionType } from "excalibur";
 
 export class Character extends Actor {
     hp;
@@ -6,6 +6,7 @@ export class Character extends Actor {
 
     constructor(options) {
         super(options);
+        this.body.collisionType = CollisionType.Active;
     }
 
     damage(amount) {

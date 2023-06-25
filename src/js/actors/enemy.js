@@ -19,10 +19,7 @@ export class Enemy extends Character {
     onInitialize(_engine) {
         //on collision
         this.on('collisionstart', (e) => {
-            console.log(`${this.id} should coll ${e.other.id}`)
-
             if (e.other instanceof Player) {
-                console.log('type is player')
                 e.other.damage(10);
             }
         });

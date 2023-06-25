@@ -1,4 +1,4 @@
-import {Input, Actor, Color, Vector} from 'excalibur';
+import {Input, Actor, Color, Vector, CollisionType} from 'excalibur';
 import { Enemy } from './enemy';
 import { Character } from './character';
 
@@ -126,6 +126,7 @@ class Fireball extends Actor {
         this.angle = direction.toAngle(); //maybe necesarry later
         this.pos = new Vector(player.pos.x + direction.x*64 , player.pos.y + direction.y*64);
         this.vel = new Vector(direction.x * 360, direction.y * 360);
+        this.body.collisionType = CollisionType.Active;
     }
 
     onInitialize(_engine) {
