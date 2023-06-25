@@ -1,18 +1,24 @@
 import {Input, Actor, Color, Vector} from 'excalibur';
+import { Enemy } from './enemy';
+import { Character } from './character';
 
-export class Player extends Actor {
+export class Player extends Character {
     inventory;
     fireballCooldown;
     fireballLifespan;
     cooldownActive;
+    hp;
 
     constructor(options) {
+        options.z = 5;
+
         super(options);
         this.pos = new Vector(200, 200);
-
+    
         this.fireballLifespan = 1600;
         this.fireballCooldown = 1500;
         this.cooldownActive = false;
+        this.hp = 100;
     }
 
     onInitialize(_engine) {
@@ -66,8 +72,7 @@ export class Player extends Actor {
         this.cooldownActive = true;
 
         let tarDir = new Vector(target.x - this.pos.x, target.y - this.pos.y).normalize();
-        let angle = tarDir.toAngle();
-        let fb = new Fireball({}, angle, tarDir, this);
+        let fb = new Fireball({}, tarDir, this);
         this.scene.add(fb);
 
         //cooldown
@@ -79,6 +84,11 @@ export class Player extends Actor {
         this.scene.engine.clock.schedule(() => {
             fb.kill();
         }, this.fireballLifespan);
+    }
+
+    damage(amount) {
+        super.damage(amount);
+        console.log(this.hp);
     }
 }
 
@@ -106,14 +116,26 @@ class Fireball extends Actor {
     direction;
     angle;
 
-    constructor(options, angle, direction, player) {
+    constructor(options, direction, player) {
         super({
             width: 30,
             height: 30,
-            color: Color.Red
+            color: Color.Yellow,
+            z: 7
         });
-
+        this.angle = direction.toAngle(); //maybe necesarry later
         this.pos = new Vector(player.pos.x + direction.x*64 , player.pos.y + direction.y*64);
-        this.vel = new Vector(direction.x * 256, direction.y * 256);
+        this.vel = new Vector(direction.x * 360, direction.y * 360);
+    }
+
+    onInitialize(_engine) {
+        super.onInitialize(_engine);
+
+        this.on('collisionstart', (e) => {
+            if (e.other instanceof Enemy) {
+                e.other.damage(10);
+                this.kill();
+            }
+        });
     }
 }
