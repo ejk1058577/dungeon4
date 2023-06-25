@@ -1,6 +1,6 @@
 import { Actor } from "excalibur";
 
-class Item extends Actor {
+export class Item extends Actor {
     player;
     inventory;
     name;

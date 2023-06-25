@@ -1,3 +1,5 @@
+import { Item } from "./item";
+
 export class Pocari extends Item {
     constructor(options, player) {
         super(options, player);

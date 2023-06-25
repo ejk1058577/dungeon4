@@ -94,11 +94,14 @@ class Spawner {
             case 0:
                 return;
             case 1:
-                actor = new Chest({});
+                actor = new Chest({}, tile.pos);
+                break;
             case 2:
                 actor = new Fountain({});
+                break;
             case 3:
                 actor = new Portal({}, tile.pos);
+                break;
         }
         this.scene.add(actor);
         this.level.poi = actor;

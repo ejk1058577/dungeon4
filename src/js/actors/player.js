@@ -10,7 +10,6 @@ export class Player extends Character {
     inventory;
 
     //modifiers
-    moveSpeedIncr;
 
     constructor(options) {
         options.z = 5;
@@ -44,6 +43,8 @@ export class Player extends Character {
 
     playerInput(engine, delta) {
         let moveSpeed = 1000;
+        if (this.moveSpeedIncr > 0) moveSpeed = moveSpeed*(this.moveSpeedIncr/100);
+
         let xspeed = 0;
         let yspeed = 0;
         let inputs = 0;

@@ -30,7 +30,7 @@ export class Floor {
 
         this.spawnPortal();
         this.spawnChest();
-        this.spawnFountain();
+        //this.spawnFountain(); not finished
     }
 
     createGrid() {
@@ -114,11 +114,15 @@ export class Floor {
     }
 
     spawnChest() {
-
+        let i = this.randomUnassignedLevel();
+        this.levels[i].spawner.spawnPoI(1);
+        this.unassignedLevels.splice(i , 1);
     }
 
     spawnFountain() {
-
+        let i = this.randomUnassignedLevel();
+        this.levels[i].spawner.spawnPoI(2);
+        this.unassignedLevels.splice(i , 1);
     }
 
     randomUnassignedLevel() {

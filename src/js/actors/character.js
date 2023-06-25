@@ -4,6 +4,7 @@ export class Character extends Actor {
     hp;
     maxHp;
     hpBar;
+    moveSpeedIncr; //needed for harder monsters
 
     constructor(options) {
         super(options);
@@ -11,6 +12,7 @@ export class Character extends Actor {
         this.hpBar = new HPBar(this);
         this.hp = 0;
         this.maxHp = 0;
+        this.moveSpeedIncr = 0;
     }
 
     onInitialize(_engine) {
