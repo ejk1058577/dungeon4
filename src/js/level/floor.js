@@ -1,5 +1,6 @@
-import { Actor, CollisionType, Color, Vector } from "excalibur";
+import { Vector } from "excalibur";
 import { Level } from "./level";
+import { Wall } from "./wall";
 
 export class Floor {
     scene;
@@ -42,7 +43,7 @@ export class Floor {
                     ymin: vt * 50 + (vt-1) * 4 * 140
                 }
 
-                return new Level(this.scene, lvlBounds);
+                return new Level(this, this.scene, lvlBounds);
             });
         });
     }
@@ -56,9 +57,15 @@ export class Floor {
                     let wall = new Wall({}, pos, 0);
                     this.scene.add(wall);
 
+                    if (this.assocConditions(i, j, h)) {
+                        console.log(wall);
+                        this.grid[i][j].assocWalls.push(wall);
+                        if (i > 0) this.grid[i-1][j].assocWalls.push(wall);
+                    }
+
                     //final row
                     if (i == 2) {
-                        let pos = new Vector(l.bounds.xmin + (h+1)*140, l.bounds.ymax + 100);
+                        let pos = new Vector(l.bounds.xmin + (h+1)*140, l.bounds.ymax + 95);
                         let wall = new Wall({}, pos, 0);
                         this.scene.add(wall);
                     }
@@ -70,8 +77,15 @@ export class Floor {
                     let wall = new Wall({}, pos, 1);
                     this.scene.add(wall);
 
+                    if (this.assocConditions(j, i, h)) { //i and j are flipped for vt
+                        console.log(wall);
+                        this.grid[i][j].assocWalls.push(wall);
+                        if (j > 0) this.grid[i][j-1].assocWalls.push(wall);
+                    }
+
+                    //final column
                     if (j == 2) {
-                        let pos = new Vector(l.bounds.xmax + 100, l.bounds.ymin + (h+1)*140);
+                        let pos = new Vector(l.bounds.xmax + 95, l.bounds.ymin + (h+1)*140);
                         let wall = new Wall({}, pos, 1);
                         this.scene.add(wall);
                     }
@@ -79,18 +93,19 @@ export class Floor {
             });
         });
     }
-}
 
-class Wall extends Actor {
-    or; //0 == hz | 1 == vt, stands for orientation
+    assocConditions(i, j, h) { //this gets functions because its A LOT of boolean logic
+        //i = vertical poz
+        //j = horiz poz
+        //h = which wall
 
-    constructor(options, pos, or) {
-        options.width = or == 0 ? 140 : 50;
-        options.height = or == 0 ? 50 : 140;
-        options.color = Color.Black;
-        super(options);
-        this.or = or;
-        this.pos = pos;
-        this.body.collisionType = CollisionType.Fixed;
+        if (i==1 || i==2) { 
+            if (h==1 && j==0) return true;
+            else if (h==2 && j==2) return true;
+            else if (h==2 && j==1 && i==1) return true;
+            else if (h==1 && j==1 && i==2) return true;
+        }
+
+        return false;
     }
 }
