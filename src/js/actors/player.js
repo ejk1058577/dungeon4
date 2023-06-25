@@ -20,7 +20,8 @@ export class Player extends Character {
         this.cooldownActive = false;
         this.hp = 100;
 
-        this.body.collisionType = CollisionType.Passive;
+        //for testing purposes
+        //this.body.collisionType = CollisionType.Passive;
     }
 
     onInitialize(_engine) {

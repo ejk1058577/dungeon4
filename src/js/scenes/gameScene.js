@@ -1,5 +1,4 @@
 import { Scene, Color } from "excalibur";
-import { Level } from "../level/level.js"
 import { Player } from "../actors/player";
 import { Floor } from "../level/floor.js";
 
