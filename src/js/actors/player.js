@@ -26,9 +26,8 @@ export class Player extends Character {
     onInitialize(_engine) {
         super.onInitialize(_engine);
 
-        _engine.input.pointers.on('down', (e) => {
-            this.fireball(_engine.input.pointers.primary.lastWorldPos);
-        });
+        _engine.input.pointers.on('down', (e) => this.fireball(_engine.input.pointers.primary.lastWorldPos));
+        this.on('prekill', (e) => _engine.input.pointers.off('down'));
     }
 
     onPreUpdate(_engine, _delta) {
@@ -38,7 +37,7 @@ export class Player extends Character {
     }
 
     playerInput(engine, delta) {
-        let moveSpeed = 500;
+        let moveSpeed = 1000;
         let xspeed = 0;
         let yspeed = 0;
         let inputs = 0;
