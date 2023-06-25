@@ -12,6 +12,7 @@ export class Level {
     floor;
     assocWalls;
     cleared;
+    poi;
 
     constructor(floor, scene, bounds) { 
         this.floor = floor;
@@ -21,6 +22,7 @@ export class Level {
         this.assocWalls = [];
         this.cleared = false;
         this.tiles = [];
+        this.poi = null;
 
         //make grid
         this.grid =
@@ -50,8 +52,8 @@ export class Level {
         this.cleared = true;
         //reveal items?
         //enable fountains / portal?
+        if (this.poi != null) this.poi.activate();
         this.assocWalls.forEach(wall => wall.open());
-
     }
 }
 
@@ -89,7 +91,7 @@ class Spawner {
                 actor = new Portal({}, tile.pos);
         }
         this.scene.add(actor);
-        console.log(actor);
+        this.level.poi = actor;
     }
 
     onEnemyKill(enemy) {

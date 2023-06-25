@@ -1,4 +1,4 @@
-import { Actor } from "excalibur";
+import { Actor, CollisionType } from "excalibur";
 
 export class PointOfInterest extends Actor {
     activated;
@@ -7,6 +7,7 @@ export class PointOfInterest extends Actor {
         options.z = 4;
         super(options);
         this.activated = false;
+        this.body.collisionType = CollisionType.Fixed;
     }
 
     onInitialize(_engine) {

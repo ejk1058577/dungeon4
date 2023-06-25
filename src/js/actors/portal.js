@@ -9,8 +9,6 @@ constructor(options, pos) {
         options.color = Color.Magenta;
         options.pos = pos;
         super(options);
-
-        this.activated = true;
     }
 
     onInitialize(_engine) {
@@ -22,5 +20,12 @@ constructor(options, pos) {
                 }
             }
         });
+
+    }
+
+    activate() {
+        super.activate();
+        this.color = Color.Magenta.lighten(0.5);
+        this.scene.score++;
     }
 }

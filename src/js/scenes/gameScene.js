@@ -6,6 +6,12 @@ import { Floor } from "../level/floor.js";
 export class GameScene extends Scene {
     player;
     floor;
+    floorCount;
+
+    constructor() {
+        super();
+        this.floorCount = 1; 
+    }
 
     onActivate(_engine) {
         super.onActivate(_engine);

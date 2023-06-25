@@ -70,8 +70,8 @@ export class Floor {
                     let wall = new Wall({}, pos, 0);
                     this.scene.add(wall);
 
+                    //assoc walls
                     if (this.assocConditions(i, j, h)) {
-                        console.log(wall);
                         this.grid[i][j].assocWalls.push(wall);
                         if (i > 0) this.grid[i-1][j].assocWalls.push(wall);
                     }
@@ -90,8 +90,8 @@ export class Floor {
                     let wall = new Wall({}, pos, 1);
                     this.scene.add(wall);
 
+                    //assoc walls 2
                     if (this.assocConditions(j, i, h)) { //i and j are flipped for vt
-                        console.log(wall);
                         this.grid[i][j].assocWalls.push(wall);
                         if (j > 0) this.grid[i][j-1].assocWalls.push(wall);
                     }
