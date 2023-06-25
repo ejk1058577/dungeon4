@@ -1,14 +1,15 @@
 import { Scene, Color } from "excalibur";
-import { Level } from "../level/Level";
+import { Level } from "../level/level.js"
 import { Player } from "../actors/player";
+import { Floor } from "../level/floor.js";
 
 export class GameScene extends Scene {
     player;
-    level;
+    floor;
 
     onActivate(_engine) {
         super.onActivate(_engine);
-        this.level = new Level(this);
+        this.floor = new Floor(this);
         this.player = new Player({
             height: 50,
             width: 50,
