@@ -7,7 +7,10 @@ export class Player extends Character {
     fireballCooldown;
     fireballLifespan;
     cooldownActive;
-    hp;
+    inventory;
+
+    //modifiers
+    moveSpeedIncr;
 
     constructor(options) {
         options.z = 5;
@@ -20,6 +23,7 @@ export class Player extends Character {
         this.cooldownActive = false;
         this.hp = 100;
         this.maxHp = 100;
+        this.inventory = new Inventory(this);
 
         //for testing purposes
         //this.body.collisionType = CollisionType.Passive;
@@ -109,12 +113,13 @@ class Inventory {
         this.items.push(item);
     }
 
-    removeItem() {
-
+    removeItem(item) {
+        //not needed for now lol
     }
 
-    calculateEffects() {
-
+    pickup(item) {
+        this.items.push(item);
+        item.applyEffects();
     }
 }
 
