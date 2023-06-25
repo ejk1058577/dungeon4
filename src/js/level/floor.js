@@ -78,14 +78,6 @@ export class Floor {
                 }
             });
         });
-
-        //last row hz
-        // for (let h = 0; h < 4; h++) {
-        //     let pos = new Vector(this.bounds.xmin + h*140, this.bounds.ymax + 50);
-        //     let wall = new Wall({}, pos, 0);
-        //     this.scene.add(wall);
-        //     console.log(wall.id);
-        // }
     }
 }
 
