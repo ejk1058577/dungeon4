@@ -19,6 +19,7 @@ export class Player extends Character {
         this.fireballCooldown = 0;
         this.cooldownActive = false;
         this.hp = 100;
+        this.maxHp = 100;
 
         //for testing purposes
         //this.body.collisionType = CollisionType.Passive;
@@ -97,13 +98,15 @@ export class Player extends Character {
 
 class Inventory {
     player;
+    items;
 
     constructor(player) {
         this.player = player;
+        this.items = [];
     }
 
-    addItem() {
-
+    addItem(item) {
+        this.items.push(item);
     }
 
     removeItem() {

@@ -16,9 +16,12 @@ export class Enemy extends Character {
 
         this.spawner = spawner;
         this.hp = 30;
+        this.maxHp = 30;
     }
 
     onInitialize(_engine) {
+        super.onInitialize(_engine);
+
         //on collision
         this.on('collisionstart', (e) => {
             if (e.other instanceof Player) {

@@ -144,11 +144,10 @@ class ActivationCollider extends Actor {
     constructor(level) {
         let pos1 = level.grid[1][1].pos;
         let pos2 = level.grid[2][2].pos;
-        console.log(`tile grid[1][1] ${level.grid[1][1]} has pos ${pos1}`);
 
         let diff = new Vector((pos2.x - pos1.x) / 2, (pos2.y - pos1.y) / 2);
         let pos = new Vector(pos2.x - diff.x, pos2.y - diff.y);
-        console.log(`spawning coll at ${pos}`);
+
         super({
             width: 350,
             height: 350,
@@ -160,9 +159,7 @@ class ActivationCollider extends Actor {
     onInitialize(_engine, _delta) {
         super.onInitialize(_engine, _delta);
         this.on('collisionstart', (e) => {
-            console.log('colliding');
             if (e.other instanceof Player) {
-                console.log('colliding with p');
                 this.level.activate();
                 this.kill()
             }
