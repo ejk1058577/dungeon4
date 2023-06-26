@@ -1,6 +1,7 @@
-import {Input, Actor, Color, Vector, CollisionType} from 'excalibur';
+import {Input, Actor, Color, Vector, CollisionType, Sprite, RotationType} from 'excalibur';
 import { Enemy } from './enemy';
 import { Character } from './character';
+import { Resources } from '../resources';
 
 export class Player extends Character {
     inventory;
@@ -130,15 +131,29 @@ class Fireball extends Actor {
 
     constructor(options, direction, player) {
         super({
-            width: 30,
-            height: 30,
+            width: 50,
+            height: 50,
             color: Color.Yellow,
             z: 7
         });
         this.angle = direction.toAngle(); //maybe necesarry later
+        this.actions.rotateTo(direction.toAngle() + 1.570796, 999, RotationType.ShortestPath);
         this.pos = new Vector(player.pos.x + direction.x*64 , player.pos.y + direction.y*64);
         this.vel = new Vector(direction.x * 360, direction.y * 360);
         this.body.collisionType = CollisionType.Active;
+        let image = Resources.Fireball;
+        let sprite = new Sprite({
+            image: image,
+            sourceView: {
+                width: 16,
+                height: 16
+            },
+            destSize: {
+                width: 50,
+                height: 50
+            }
+        });
+        this.graphics.use(sprite);
     }
 
     onInitialize(_engine) {
