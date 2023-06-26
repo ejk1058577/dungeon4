@@ -1,6 +1,7 @@
-import { Actor, Color, Vector } from "excalibur";
+import { Actor, Color, RotationType, Sprite, Vector } from "excalibur";
 import { Player } from "./player";
 import { Character } from "./character";
+import { Resources } from "../resources";
 
 export class Enemy extends Character {
     sprite;
@@ -25,6 +26,20 @@ export class Enemy extends Character {
         this.walkTarget = this.player.pos;
         this.moveSpeedIncr = this.spawner.level.scene.floorCount > 1 ? 1 + this.spawner.level.scene.floorCount * 0.05 : 1;
         this.attackIncr = this.spawner.level.scene.floorCount > 1 ? 1 + this.spawner.level.scene.floorCount * 0.05 : 1;
+
+        let image = Resources.Enemy;
+        let sprite = new Sprite({
+            image: image,
+            sourceView: {
+                width: 16,
+                height: 16
+            },
+            destSize: {
+                width: 60,
+                height: 60
+            }
+        });
+        this.graphics.use(sprite);
     }
 
     onPreUpdate(_engine, _delta) {

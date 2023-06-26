@@ -18,8 +18,8 @@ export class Player extends Character {
         super(options);
         this.pos = new Vector(200, 200);
     
-        this.fireballLifespan = 1600;
-        this.fireballCooldown = 0;
+        this.fireballLifespan = 1200;
+        this.fireballCooldown = 1200;
         this.cooldownActive = false;
         this.hp = 100;
         this.maxHp = 100;
@@ -27,6 +27,20 @@ export class Player extends Character {
 
         //for testing purposes
         //this.body.collisionType = CollisionType.Passive;
+
+        let image = Resources.Player;
+        let sprite = new Sprite({
+            image: image,
+            sourceView: {
+                width: 16,
+                height: 16
+            },
+            destSize: {
+                width: 80,
+                height: 80
+            }
+        });
+        this.graphics.use(sprite);
     }
 
     onInitialize(_engine) {
@@ -44,7 +58,7 @@ export class Player extends Character {
     }
 
     playerInput(engine, delta) {
-        let moveSpeed = 1000;
+        let moveSpeed = 400;
         if (this.moveSpeedIncr > 0) moveSpeed = moveSpeed*(this.moveSpeedIncr/100);
 
         let xspeed = 0;
@@ -139,7 +153,7 @@ class Fireball extends Actor {
         this.angle = direction.toAngle(); //maybe necesarry later
         this.actions.rotateTo(direction.toAngle() + 1.570796, 999, RotationType.ShortestPath);
         this.pos = new Vector(player.pos.x + direction.x*64 , player.pos.y + direction.y*64);
-        this.vel = new Vector(direction.x * 360, direction.y * 360);
+        this.vel = new Vector(direction.x * 300, direction.y * 300);
         this.body.collisionType = CollisionType.Active;
         let image = Resources.Fireball;
         let sprite = new Sprite({
@@ -161,7 +175,7 @@ class Fireball extends Actor {
 
         this.on('collisionstart', (e) => {
             if (e.other instanceof Enemy) {
-                e.other.damage(900);
+                e.other.damage(15);
                 this.kill();
             }
         });

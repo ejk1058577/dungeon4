@@ -35,7 +35,7 @@ class HPBar extends Actor {
             width: 80,
             height: 16,
             color: Color.Black,
-            pos: new Vector (character.pos.x, character.pos.y - 40),
+            pos: new Vector (character.pos.x, character.pos.y - 60),
             z: 20
         });
         this.character = character;
@@ -47,7 +47,7 @@ class HPBar extends Actor {
 
     onPreUpdate(_engine, _delta) {
         super.onPreUpdate(_engine, _delta);
-        this.pos = new Vector (this.character.pos.x, this.character.pos.y - 40);
+        this.pos = new Vector (this.character.pos.x, this.character.pos.y - 60);
         this.vel = this.character.vel;
     }
 }
