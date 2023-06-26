@@ -14,12 +14,12 @@ export class GameScene extends Scene {
 
     onActivate(_engine) {
         super.onActivate(_engine);
-        this.floor = new Floor(this);
         this.player = new Player({
             height: 50,
             width: 50,
             color: Color.Blue
-        })
+        });
+        this.floor = new Floor(this);
         this.add(this.player);
         this.camera.strategy.lockToActor(this.player);
     }
