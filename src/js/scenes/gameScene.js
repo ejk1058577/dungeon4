@@ -37,5 +37,7 @@ export class GameScene extends Scene {
         })
         this.add(this.player);
         this.camera.strategy.lockToActor(this.player);
+        this.floorCount++;
+        console.log(this.floorCount);
     }
 }
