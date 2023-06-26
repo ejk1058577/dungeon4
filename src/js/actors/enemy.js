@@ -23,7 +23,7 @@ export class Enemy extends Character {
         this.maxHp = 30;
         this.player = this.spawner.level.scene.player;
         this.walkTarget = this.player.pos;
-        this.moveSpeedIncr = this.spawner.level.scene.floorCount > 1 ? 1 + this.spawner.level.scene.floorCount * 0.025 : 1;
+        this.moveSpeedIncr = this.spawner.level.scene.floorCount > 1 ? 1 + this.spawner.level.scene.floorCount * 0.05 : 1;
         this.attackIncr = this.spawner.level.scene.floorCount > 1 ? 1 + this.spawner.level.scene.floorCount * 0.05 : 1;
     }
 
@@ -31,7 +31,6 @@ export class Enemy extends Character {
         super.onPreUpdate(_engine, _delta);
         let moveSpeed = 100;
         if (this.moveSpeedIncr > 1) moveSpeed = this.moveSpeedIncr*moveSpeed;
-        console.log(`${this.moveSpeedIncr} -  ${moveSpeed}`);
         this.walkTarget = this.player.pos;
         let angle = new Vector((this.player.pos.x - this.pos.x), (this.player.pos.y - this.pos.y)).normalize();
         this.vel = new Vector(angle.x * moveSpeed, angle.y * moveSpeed);

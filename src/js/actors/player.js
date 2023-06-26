@@ -33,6 +33,7 @@ export class Player extends Character {
 
         _engine.input.pointers.on('down', (e) => this.fireball(_engine.input.pointers.primary.lastWorldPos));
         this.on('prekill', (e) => _engine.input.pointers.off('down'));
+        this.pos = new Vector(1010, 1835); //hardcoding this omegalul
     }
 
     onPreUpdate(_engine, _delta) {
@@ -97,7 +98,6 @@ export class Player extends Character {
 
     damage(amount) {
         super.damage(amount);
-        console.log(this.hp);
     }
 }
 
