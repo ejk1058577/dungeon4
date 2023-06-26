@@ -1,4 +1,5 @@
-import { Actor, CollisionType, Color, ScreenElement, Vector } from "excalibur";
+import { Actor, CollisionType, Color, ScreenElement, Sprite, Vector } from "excalibur";
+import { Resources } from "../resources";
 
 export class Character extends Actor {
     hp;
@@ -49,5 +50,27 @@ class HPBar extends Actor {
         super.onPreUpdate(_engine, _delta);
         this.pos = new Vector (this.character.pos.x, this.character.pos.y - 60);
         this.vel = this.character.vel;
+        this.updateBar(this.character.hp, this.character.maxHp);
+    }
+
+    updateBar(hp, maxhp) {
+        let hpsprite = (hp / maxhp) * 10;
+        console.log(hpsprite);
+        let sprite = new Sprite({
+            image: Resources.Healthbar,
+            sourceView: {
+              // Take a small slice of the source image starting at pixel (10, 10) with dimension 20 pixels x 20 pixels
+              x: 0,
+              y: hpsprite * 2 + (hpsprite - 1),
+              width: 10,
+              height: 2,
+            },
+            destSize: {
+              // Optionally specify a different projected size, otherwise use the source
+              width: 80,
+              height: 16,
+            },
+          });
+        this.graphics.use(sprite);
     }
 }
