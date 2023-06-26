@@ -6,7 +6,7 @@ export class Wall extends Actor {
     constructor(options, pos, or) {
         options.width = or == 0 ? 140 : 50;
         options.height = or == 0 ? 50 : 140;
-        options.color = Color.Black;
+        options.color = new Color(35, 38, 52);
         super(options);
         this.or = or;
         this.pos = pos;
@@ -14,7 +14,7 @@ export class Wall extends Actor {
     }
 
     open() {
-        this.body.collisionType = CollisionType.Passive;
-        this.color = Color.Azure;
+        this.body.collisionType = CollisionType.Passive; 
+        this.color = new Color(81, 87, 109);
     }
 }

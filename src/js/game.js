@@ -1,14 +1,18 @@
 import '../css/style.css'
-import { Actor, Engine, Vector } from "excalibur"
+import { Actor, Color, Engine, Vector } from "excalibur"
 import { Resources, ResourceLoader } from './resources.js'
 import { GameScene } from './scenes/gameScene'
 import { DevTool } from '@excaliburjs/dev-tools'
 
-export class Game extends Engine {
+const colorCrust = {r: 35, g: 38, b: 52};
+const colorSurface = {r: 81, g :87, b: 109};
 
+export class Game extends Engine {
+    
     constructor() {
         super({ width: 800, height: 600 })
-        this.start(ResourceLoader).then(() => this.startGame())
+        this.start(ResourceLoader).then(() => this.startGame());
+        this.backgroundColor = colorCrust;
     }
 
     startGame() {

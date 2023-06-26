@@ -134,7 +134,7 @@ class Tile extends Actor {
         super({
             width: 140,
             height: 140,
-            color: n % 2 > 0 ? Color.Gray : Color.DarkGray,
+            color: new Color(81, 87, 109),
             z: 1
         });
         this.pos = pos;
