@@ -54,14 +54,13 @@ class HPBar extends Actor {
     }
 
     updateBar(hp, maxhp) {
-        let hpsprite = (hp / maxhp) * 10;
-        console.log(hpsprite);
+        let hpsprite = Math.ceil(hp / maxhp * 10);
         let sprite = new Sprite({
             image: Resources.Healthbar,
             sourceView: {
               // Take a small slice of the source image starting at pixel (10, 10) with dimension 20 pixels x 20 pixels
               x: 0,
-              y: hpsprite * 2 + (hpsprite - 1),
+              y: hpsprite*3 - 2,
               width: 10,
               height: 2,
             },
